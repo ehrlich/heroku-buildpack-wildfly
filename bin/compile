@@ -56,7 +56,7 @@ fi
 cat << EOF > $BUILD_DIR/.profile.d/jboss.sh
 export JBOSS_HOME=${JBOSS_HOME}
 # prevent WFLYLOG0078
-export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Djboss.modules.system.pkgs=org.jboss.logmanager"
-export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
-export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Xbootclasspath/p:$JBOSS_HOME/modules/system/layers/base/org/jboss/logmanager/main/jboss-logmanager-2.0.4.Final.jar"
+# export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Djboss.modules.system.pkgs=org.jboss.logmanager"
+# export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Djava.util.logging.manager=org.jboss.logmanager.LogManager"
+# export JAVA_TOOL_OPTIONS="\${JAVA_TOOL_OPTIONS} -Xbootclasspath/p:$JBOSS_HOME/modules/system/layers/base/org/jboss/logmanager/main/jboss-logmanager-2.0.4.Final.jar"
 EOF
