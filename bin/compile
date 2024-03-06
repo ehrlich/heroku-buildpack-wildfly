@@ -43,7 +43,7 @@ echo "done"
 
 echo -n "-----> Deploying war file(s)... "
 pwd
-cp target/*.ear $JBOSS_HOME/standalone/deployments/
+cp 05_myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
 echo "-----> Creating configuration..."
