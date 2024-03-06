@@ -42,6 +42,7 @@ rm wildfly-$WILDFLY_VERSION.tar.gz
 echo "done"
 
 echo -n "-----> Deploying war file(s)... "
+pwd
 cp target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
