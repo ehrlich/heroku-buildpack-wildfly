@@ -41,7 +41,7 @@ rm wildfly-$WILDFLY_VERSION.tar.gz
 echo "done"
 
 echo -n "-----> Deploying war file(s)... "
-cp 05\ myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
+cp target/*.war $JBOSS_HOME/standalone/deployments/
 echo "done"
 
 echo "-----> Creating configuration..."
