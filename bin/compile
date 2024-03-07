@@ -47,7 +47,7 @@ echo "done"
 # Get the absolute path of the builpack directory
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
-cp $BP_DIR/lib/env/standalone.xml $JBOSS_HOME/standalone/configuration/
+cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
