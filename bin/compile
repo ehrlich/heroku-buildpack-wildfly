@@ -44,10 +44,11 @@ echo -n "-----> Deploying war file(s)... "
 cp target/*.war $JBOSS_HOME/standalone/deployments/
 echo "done"
 
-# Get the absolute path of the builpack directory
+# Get the absolute path of the buildpack directory
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
-# cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/
+cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployment/
+cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
