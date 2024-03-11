@@ -56,7 +56,7 @@ echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
-# cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
+cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
