@@ -20,19 +20,21 @@ curl --retry 3 --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-c
 
 install_java_with_overlay ${BUILD_DIR}
 
-WILDFLY_VERSION="25.0.1.Final"
-WILDFLY_SHA1="5e73ce775be1307905c72009e59a55957c8ef81a"
+# WILDFLY_VERSION="25.0.1.Final"
+WILDFLY_VERSION="16.0.0.Final"
+# WILDFLY_SHA1="5e73ce775be1307905c72009e59a55957c8ef81a"
 JBOSS_HOME=".jboss/wildfly-${WILDFLY_VERSION}"
 
 cd $BUILD_DIR
 
 mkdir -p .jboss
 
-echo -n "-----> Installing Wildfly ${WILDFLY_VERSION}... "
-wget https://github.com/wildfly/wildfly/releases/download/25.0.1.Final/wildfly-25.0.1.Final.tar.gz
+echo -n "-----> downloading Wildfly ${WILDFLY_VERSION}... "
+# wget https://github.com/wildfly/wildfly/releases/download/25.0.1.Final/wildfly-25.0.1.Final.tar.gz
+wget https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.zip
 echo "downloaded"
 # sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 > /dev/null 2>&1
-echo "verified"
+# echo "verified"
 tar xf wildfly-$WILDFLY_VERSION.tar.gz
 echo "extracted"
 mv wildfly-$WILDFLY_VERSION $JBOSS_HOME
@@ -48,7 +50,8 @@ echo "done"
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
-cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
+# cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
+cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
