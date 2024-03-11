@@ -62,7 +62,7 @@ echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
   echo "        - using existing process types"
 else
-  cat << EOF > $BUILD_DIR/e
+  cat << EOF > $BUILD_DIR/Procfile
 web: \$JBOSS_HOME/bin/standalone.sh -b=0.0.0.0 -Djboss.http.port=\$PORT
 EOF
 fi
