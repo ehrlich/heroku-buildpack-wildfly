@@ -13,6 +13,7 @@ CACHE_DIR=$2
 ENV_DIR=$3
 
 echo "path BUILD_DIR: ${BUILD_DIR}"
+echo < ls -la
 
 JVM_COMMON_BUILDPACK=${JVM_COMMON_BUILDPACK:-"https://codon-buildpacks.s3.amazonaws.com/buildpacks/heroku/jvm-common.tgz"}
 mkdir -p /tmp/jvm-common
@@ -55,13 +56,13 @@ echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
-cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
+# cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
   echo "        - using existing process types"
 else
-  cat << EOF > $BUILD_DIR/Procfile
+  cat << EOF > $BUILD_DIR/e
 web: \$JBOSS_HOME/bin/standalone.sh -b=0.0.0.0 -Djboss.http.port=\$PORT
 EOF
 fi
