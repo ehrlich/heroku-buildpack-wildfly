@@ -44,7 +44,7 @@ echo "done"
 
 echo -n "-----> Deploying war file(s)... "
 # cp target/*.war $JBOSS_HOME/standalone/deployments/
-cp target/*.ear $JBOSS_HOME/standalone/deployments/
+cp 05_myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
 # Get the absolute path of the buildpack directory
