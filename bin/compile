@@ -31,7 +31,7 @@ mkdir -p .jboss
 
 echo -n "-----> downloading Wildfly ${WILDFLY_VERSION}... "
 # wget https://github.com/wildfly/wildfly/releases/download/25.0.1.Final/wildfly-25.0.1.Final.tar.gz
-wget https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.zip
+wget https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.tar.gz
 echo "downloaded"
 # sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 > /dev/null 2>&1
 # echo "verified"
