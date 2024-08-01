@@ -12,9 +12,21 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-echo -n "show some config var start 2"
-echo "$(cat $env_dir/$DATABASE_URL)"
-echo "show some config var end 2"
+echo -n "show some config var start 3"
+
+export_env_dir() {
+  env_dir=$3
+  denylist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
+  if [ -d "$env_dir" ]; then
+    for e in $(ls $env_dir); do
+      echo "$e" | grep -qvE "$denylist_regex" &&
+      export "$e=$(cat $env_dir/$e)"
+      :
+    done
+  fi
+}
+echo "${DATABASE_URL}"
+echo "show some config var end 3"
 
 echo "path BUILD_DIR: ${BUILD_DIR}"
 ls -la $BUILD_DIR
