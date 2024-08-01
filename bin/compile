@@ -72,18 +72,21 @@ cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 
-echo "s,DB_CONNECTION_URL,${DB_URL_ENV}," > script.sed
-echo "script: $(cat script.sed)"
-sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
+echo "s,DB_CONNECTION_URL,${DB_URL_ENV}," > script1.sed
+echo "script: $(cat script1.sed)"
+#sed -n -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 
-echo "s,DB_USER_NAME,${DB_USER_ENV}," > script.sed
-echo "script: $(cat script.sed)"
-sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
+echo "s,DB_USER_NAME,${DB_USER_ENV}," > script2.sed
+echo "script: $(cat script2.sed)"
+#sed -n -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 
-echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script.sed
-echo "script: $(cat script.sed)"
-sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
-rm script.sed
+echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script3.sed
+echo "script: $(cat script3.sed)"
+sed -n -f script1.sed -f script2.sed -f script3.sed $JBOSS_HOME/standalone/configuration/standalone.xml
+
+rm script1.sed
+rm script2.sed
+rm script3.sed
 
 echo "$(cat $JBOSS_HOME/standalone/configuration/standalone.xml)"
 # cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
