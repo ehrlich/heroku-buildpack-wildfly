@@ -61,12 +61,19 @@ echo -n "-----> Deploying war file(s)... "
 cp 05_myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
+#DB_CONNECTION_URL
+#DB_USER_NAME
+#DB_USER_PASSWORD
+
 # Get the absolute path of the buildpack directory
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i -e 's/DB_CONNECTION_URL/DB_URL_ENV/g' $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i -e 's/DB_USER_NAME/DB_USER_ENV/g' $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i -e 's/DB_USER_PASSWORD/DB_PASSWORD_ENV/g' $JBOSS_HOME/standalone/configuration/standalone.xml
 # cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
 
 echo "-----> Creating configuration..."
