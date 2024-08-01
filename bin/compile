@@ -82,7 +82,10 @@ echo "script: $(cat script2.sed)"
 
 echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script3.sed
 echo "script: $(cat script3.sed)"
-sed -n -f script1.sed -f script2.sed -f script3.sed $BP_DIR/standalone.xml > $JBOSS_HOME/standalone/configuration/standalone.xml
+cp $BP_DIR/standalone.xml input.xml
+sed -n -f script1.sed -f script2.sed -f script3.sed input.xml > output.xml
+
+cp output.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 
 rm script1.sed
 rm script2.sed
