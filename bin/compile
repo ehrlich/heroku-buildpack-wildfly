@@ -72,13 +72,13 @@ cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 echo "s/DB_CONNECTION_URL/${DB_URL_ENV}/" >> script.sed
+echo "script: $(cat script.sed)"
 sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 rm script.sed
 echo "s/DB_USER_NAME/${DB_USER_ENV}/" >> script.sed
 sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 rm script.sed
 echo "s/DB_USER_PASSWORD/${DB_PASSWORD_ENV}/" >> script.sed
-echo "script: $(cat script.sed)"
 sed -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 rm script.sed
 echo "$(cat $JBOSS_HOME/standalone/configuration/standalone.xml)"
