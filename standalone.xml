@@ -195,7 +195,7 @@
         <subsystem xmlns="urn:jboss:domain:datasources:5.0">
             <datasources>
                 <datasource jta="true" jndi-name="java:/losDS" pool-name="PostgreSQLPool" enabled="true" use-java-context="true" use-ccm="true">
-                    <connection-url>jdbc:postgresql://ec2-52-54-140-137.compute-1.amazonaws.com:5432/d77vs3tua32f8d</connection-url>
+                    <connection-url>DB_CONNECTION_URL</connection-url>
                     <driver-class>org.postgresql.Driver</driver-class>
                     <driver>postgresql-42.7.2.jar</driver>
                     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
@@ -207,8 +207,8 @@
                         <flush-strategy>FailingConnectionOnly</flush-strategy>
                     </pool>
                     <security>
-                        <user-name>kqcjuvczornczt</user-name>
-                        <password>f4aa2846788c005eb95b40d80c4b2c3856bf7ce4ab82c361609cc60b1694c8c5</password>
+                        <user-name>DB_USER_NAME</user-name>
+                        <password>DB_USER_PASSWORD</password>
                     </security>
                 </datasource>
             </datasources>
