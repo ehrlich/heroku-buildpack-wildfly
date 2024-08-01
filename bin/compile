@@ -7,13 +7,9 @@ set -e
 echo -n "show some config var 0"
 
   env_dir=$1
-  denylist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
   if [ -d "$env_dir" ]; then
     for e in $(ls $env_dir); do
-      echo "$e" | grep -qvE "$denylist_regex" && export "$e=$(cat $env_dir/$e)"
-      echo -n "$e"
-      echo -n "\$e"
-      echo -n "show some config var n"
+      echo "$e" && export "$e=$(cat $env_dir/$e)"
       :
     done
   fi
