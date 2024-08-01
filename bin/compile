@@ -71,9 +71,9 @@ echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
 # cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
-sed -i -e "s/DB_CONNECTION_URL/${DB_URL_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
-sed -i -e "s/DB_USER_NAME/${DB_USER_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
-sed -i -e "s/DB_USER_PASSWORD/${DB_PASSWORD_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i "s/DB_CONNECTION_URL/${DB_URL_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i "s/DB_USER_NAME/${DB_USER_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
+sed -i "s/DB_USER_PASSWORD/${DB_PASSWORD_ENV}/g" $JBOSS_HOME/standalone/configuration/standalone.xml
 echo "$(cat $JBOSS_HOME/standalone/configuration/standalone.xml)"
 # cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
 
