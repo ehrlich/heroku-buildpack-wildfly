@@ -85,6 +85,8 @@ echo "script: $(cat script3.sed)"
 cp $BP_DIR/standalone.xml input.xml
 sed -n -f script1.sed -f script2.sed -f script3.sed input.xml > output.xml
 
+echo "$(cat output.xml)"
+
 cp output.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 
 rm script1.sed
