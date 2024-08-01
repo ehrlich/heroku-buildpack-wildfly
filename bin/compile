@@ -27,6 +27,9 @@ export_env_dir() {
 echo "${DATABASE_URL}"
 echo "show some config var end 3"
 
+echo "path ENV_DIR: ${ENV_DIR}"
+ls -la $ENV_DIR
+
 echo "path BUILD_DIR: ${BUILD_DIR}"
 ls -la $BUILD_DIR
 
