@@ -83,7 +83,7 @@ echo "script: $(cat script2.sed)"
 echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script3.sed
 echo "script: $(cat script3.sed)"
 cp $BP_DIR/standalone.xml input.xml
-sed -n -f script1.sed -f script2.sed -f script3.sed input.xml > output.xml
+sed -f script1.sed -f script2.sed -f script3.sed input.xml > output.xml
 
 echo "$(cat output.xml)"
 
