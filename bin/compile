@@ -4,6 +4,8 @@
 # fail fast
 set -e
 
+echo -n "show some config var 0"
+
 export_env_dir() {
   env_dir=$1
   acceptlist_regex=${2:-''}
@@ -13,13 +15,16 @@ export_env_dir() {
       echo "$e" | grep -E "$acceptlist_regex" | grep -qvE "$denylist_regex" && export "$e=$(cat $env_dir/$e)"
       echo -n "$e"
       echo -n "\$e"
+      echo -n "show some config var n"
       :
     done
   fi
 }
 
-echo -n "show some config var start"
+echo -n "show some config var 1"
 echo -n "${DATABASE_URL}"
+echo -n "\${DATABASE_URL}"
+echo ${DATABASE_URL}
 echo -n "show some config var end"
 
 BP_DIR=$(cd $(dirname $0)/..; pwd) # absolute path
