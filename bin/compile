@@ -9,17 +9,17 @@ echo -n "show some config var 0"
   env_dir=$1
   if [ -d "$env_dir" ]; then
     for e in $(ls $env_dir); do
-      echo "$e" && export "$e=$(cat $env_dir/$e)"
+      export "$e=$(cat $env_dir/$e)"
       :
     done
   fi
 
 
-echo -n "show some config var 1"
-echo -n "${DATABASE_URL}"
-echo -n "\${DATABASE_URL}"
+echo "show some config var 1"
+echo "${DATABASE_URL}"
+echo "\${DATABASE_URL}"
 echo ${DATABASE_URL}
-echo -n "show some config var end"
+echo "show some config var end"
 
 BP_DIR=$(cd $(dirname $0)/..; pwd) # absolute path
 BIN_DIR=$BP_DIR/bin
