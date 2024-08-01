@@ -5,7 +5,7 @@
 set -e
 
 echo -n "show some config var start 1"
-echo "cat $env_dir/$DATABASE_URL"
+echo "$(cat $env_dir/$DATABASE_URL)"
 echo "show some config var end 1"
 
 BP_DIR=$(cd $(dirname $0)/..; pwd) # absolute path
