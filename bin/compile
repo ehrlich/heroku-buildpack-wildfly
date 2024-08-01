@@ -6,7 +6,6 @@ set -e
 
 echo -n "show some config var 0"
 
-export_env_dir() {
   env_dir=$1
   denylist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH)$'}
   if [ -d "$env_dir" ]; then
@@ -18,7 +17,7 @@ export_env_dir() {
       :
     done
   fi
-}
+
 
 echo -n "show some config var 1"
 echo -n "${DATABASE_URL}"
