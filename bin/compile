@@ -24,8 +24,8 @@ export_env_dir() {
     done
   fi
 }
-DATABASE_URL=$(cat $ENV_DIR/$e)
-echo "${DATABASE_URL}"
+SOME_URL=$(cat $ENV_DIR/DATABASE_URL)
+echo "${SOME_URL}"
 echo "show some config var end 4"
 
 echo "path ENV_DIR: ${ENV_DIR}"
