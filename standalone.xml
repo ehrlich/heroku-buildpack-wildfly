@@ -173,10 +173,10 @@
                 </handlers>
             </root-logger>
             <formatter name="PATTERN">
-                <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5.5p %3.-3X{userThreadID} %t %10.-10X{userPrincipalName} %C.%M %s%e%n"/>
+                <pattern-formatter pattern="%-4{sessionUUID} %d{HH:mm:ss,SSS} %-5.5p %3.-3X{userThreadID} %t %10.-10X{userPrincipalName} %C.%M %s%e%n"/>
             </formatter>
             <formatter name="COLOR-PATTERN">
-                <pattern-formatter pattern="%d{HH:mm:ss,SSS} %-5.5p %3.-3X{userThreadID} %t %10.-10X{userPrincipalName} %C.%M %s%e%n"/>
+                <pattern-formatter pattern="%-4{sessionUUID} %d{HH:mm:ss,SSS} %-5.5p %3.-3X{userThreadID} %t %10.-10X{userPrincipalName} %C.%M %s%e%n"/>
             </formatter>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:batch-jberet:2.0">
