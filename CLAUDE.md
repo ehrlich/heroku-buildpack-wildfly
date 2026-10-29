@@ -10,7 +10,7 @@ A fork of jkutner's Heroku WildFly buildpack, customised to run the **myWMS / LO
 
 `bin/detect` always matches (prints "Wildfly"), `bin/release` emits an empty config. All real work happens in `bin/compile`, which runs with `set -e`:
 
-1. Reads `DB_URL`, `DB_USER`, `DB_PASSWORD` from the Heroku env dir (`$ENV_DIR/<NAME>` files). The script `cat`s these files unconditionally, so **all three config vars must be set on the Heroku app** or the build aborts. Their values are echoed to the build log.
+1. Reads `DATABASE_URL` from the Heroku env dir (`$ENV_DIR/DATABASE_URL`) and splits it with bash parameter expansion into `DB_USER_ENV`, `DB_PASSWORD_ENV` and `DB_URL_ENV` (the latter is `jdbc:postgresql://` + the `HOST:PORT/DBNAME` part). The file is `cat`ed unconditionally, so **`DATABASE_URL` must be set on the Heroku app** (it is, whenever a Heroku Postgres add-on is attached) or the build aborts. All three derived values are echoed to the build log.
 2. Fetches the `heroku/jvm-common` helper tarball and calls `install_java_with_overlay` to install a JDK into the build dir.
 3. Downloads **WildFly 16.0.0.Final** from download.jboss.org (SHA1 verification is commented out), extracts it to `$BUILD_DIR/.jboss/wildfly-16.0.0.Final` (`JBOSS_HOME`).
 4. Deploys `05_myWMS-ear/target/*.ear` from the app's build dir (not `target/*.war` as the README still says) and `postgresql-42.7.2.jar` from this repo into `standalone/deployments/`.
