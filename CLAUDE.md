@@ -33,7 +33,10 @@ A fork of jkutner's Heroku WildFly buildpack, customised to run the **myWMS / LO
 - Changing the WildFly version means updating `WILDFLY_VERSION` (the download URL and cache file name derive from it) and supplying a `standalone.xml` whose subsystem namespace versions match that release. A jump to WildFly 25+ also requires migrating the `los-login` domain from PicketBox to Elytron; an earlier attempt at that (`standalone-25_0_1_Final.xml`, removed in git history) stalled on exactly this.
 - The build log is the only debugging tool, which is why `bin/compile` is full of `echo`/`ls`/`cat` statements. Keep that in mind before "cleaning them up".
 - The working branch is `main` (renamed from `master` on 2026-10-29; the term `master` is not used in this project). There is no feature-branch workflow; commits go straight to `main`.
-- Two remotes: `origin` is `ehrlich/heroku-buildpack-wildfly` (development copy). `247` is `24Sevent-Connect/wildfly-heroku-buildpack`, the repo the Heroku apps (`wms-test`, `wms-live`) fetch the buildpack from. **Pushing to `origin` alone does not change what Heroku builds.** Keep `247`'s `main` in sync (`git push 247 main`). `wms-test` lists the buildpack URL without a `#branch` suffix, so it fetches `247`'s default branch `main` (verified 2026-10-29; `wms-live` not yet checked, run `heroku buildpacks -a wms-live`). `247` also carries `environment-staging`, `environment-production` and `release-*` branches, all stale at the pre-2026-10-29 state; no app is known to deploy from them.
+- Two remotes, and **both are deploy sources** (verified 2026-10-29 via `heroku buildpacks -a <app>`, both URLs without a `#branch` suffix, so each app fetches that repo's default branch `main`):
+  - `origin` = `ehrlich/heroku-buildpack-wildfly` → used by **`wms-live`** (production).
+  - `247` = `24Sevent-Connect/wildfly-heroku-buildpack` → used by **`wms-test`**.
+  Always push `main` to both (`git push origin main && git push 247 main`), otherwise test and production build from different code. `247` also carries `environment-staging`, `environment-production` and `release-*` branches, all stale at the pre-2026-10-29 state; no app deploys from them.
 - The `.idea/` directory and `.DS_Store` are untracked and there is no `.gitignore`.
 
 ## Local sanity checks
