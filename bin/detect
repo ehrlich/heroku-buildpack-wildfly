@@ -1,4 +1,3 @@
 #!/usr/bin/env bash
-# bin/detect <build-dir>
 
 echo "Wildfly" && exit 0

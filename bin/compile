@@ -39,9 +39,7 @@ curl --retry 3 --silent --location $JVM_COMMON_BUILDPACK | tar xzm -C /tmp/jvm-c
 
 install_java_with_overlay ${BUILD_DIR}
 
-# WILDFLY_VERSION="25.0.1.Final"
 WILDFLY_VERSION="16.0.0.Final"
-# WILDFLY_SHA1="5e73ce775be1307905c72009e59a55957c8ef81a"
 JBOSS_HOME=".jboss/wildfly-${WILDFLY_VERSION}"
 
 cd $BUILD_DIR
@@ -61,14 +59,12 @@ else
   mv "$WILDFLY_TGZ.part" "$WILDFLY_TGZ"
   echo "downloaded"
 fi
-# sha1sum "$WILDFLY_TGZ" | grep $WILDFLY_SHA1 > /dev/null 2>&1
-# echo "verified"
+
 echo -n "-----> extracting Wildfly ${WILDFLY_VERSION}... "
 tar xf "$WILDFLY_TGZ" -C .jboss
 echo "extracted"
 
 echo -n "-----> Deploying war file(s)... "
-# cp target/*.war $JBOSS_HOME/standalone/deployments/
 cp 05_myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
@@ -80,16 +76,12 @@ echo "done"
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
-# cp $BP_DIR/standalone-25_0_1_Final.xml $JBOSS_HOME/standalone/configuration/standalone.xml
-#cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
 
 echo "s,DB_CONNECTION_URL,${DB_URL_ENV}," > script1.sed
 echo "script: $(cat script1.sed)"
-#sed -n -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 
 echo "s,DB_USER_NAME,${DB_USER_ENV}," > script2.sed
 echo "script: $(cat script2.sed)"
-#sed -n -f script.sed $JBOSS_HOME/standalone/configuration/standalone.xml
 
 echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script3.sed
 echo "script: $(cat script3.sed)"
@@ -105,7 +97,6 @@ rm script2.sed
 rm script3.sed
 
 echo "$(cat $JBOSS_HOME/standalone/configuration/standalone.xml)"
-# cp $BP_DIR/standalone.conf $JBOSS_HOME/bin/standalone.conf
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
