@@ -32,7 +32,8 @@ A fork of jkutner's Heroku WildFly buildpack, customised to run the **myWMS / LO
 
 - Changing the WildFly version means updating `WILDFLY_VERSION` (the download URL and cache file name derive from it) and supplying a `standalone.xml` whose subsystem namespace versions match that release. A jump to WildFly 25+ also requires migrating the `los-login` domain from PicketBox to Elytron; an earlier attempt at that (`standalone-25_0_1_Final.xml`, removed in git history) stalled on exactly this.
 - The build log is the only debugging tool, which is why `bin/compile` is full of `echo`/`ls`/`cat` statements. Keep that in mind before "cleaning them up".
-- History is almost entirely `Update compile` / `Update standalone.xml` commits made via the GitHub web UI; there is no branching workflow. `origin` is `ehrlich/heroku-buildpack-wildfly`; a second remote `247` points at `24Sevent-Connect/wildfly-heroku-buildpack`.
+- The working branch is `main` (renamed from `master` on 2026-10-29; the term `master` is not used in this project). There is no feature-branch workflow; commits go straight to `main`.
+- Two remotes: `origin` is `ehrlich/heroku-buildpack-wildfly` (development copy). `247` is `24Sevent-Connect/wildfly-heroku-buildpack`, the repo the Heroku apps (`wms-test`, `wms-live`) fetch the buildpack from. **Pushing to `origin` alone does not change what Heroku builds.** Keep `247`'s `main` in sync (`git push 247 main`). `247` also carries `environment-staging`, `environment-production` and `release-*` branches whose role in the Heroku buildpack URLs is not yet confirmed; check `heroku buildpacks -a <app>` before assuming which branch an app deploys.
 - The `.idea/` directory and `.DS_Store` are untracked and there is no `.gitignore`.
 
 ## Local sanity checks
