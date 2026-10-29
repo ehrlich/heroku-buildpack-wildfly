@@ -75,7 +75,7 @@ echo "done"
 # Get the absolute path of the buildpack directory
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
-cp $BP_DIR/postgresql-42.7.2.jar $JBOSS_HOME/standalone/deployments/
+cp $BP_DIR/postgresql-42.7.14.jar $JBOSS_HOME/standalone/deployments/postgresql.jar
 
 echo "s,DB_CONNECTION_URL,${DB_URL_ENV}," > script1.sed
 echo "script: $(cat script1.sed)"

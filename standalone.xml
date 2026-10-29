@@ -197,7 +197,7 @@
                 <datasource jta="true" jndi-name="java:/losDS" pool-name="PostgreSQLPool" enabled="true" use-java-context="true" use-ccm="true">
                     <connection-url>DB_CONNECTION_URL</connection-url>
                     <driver-class>org.postgresql.Driver</driver-class>
-                    <driver>postgresql-42.7.2.jar</driver>
+                    <driver>postgresql.jar</driver>
                     <transaction-isolation>TRANSACTION_READ_COMMITTED</transaction-isolation>
                     <pool>
                         <min-pool-size>10</min-pool-size>
