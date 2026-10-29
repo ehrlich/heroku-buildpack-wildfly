@@ -48,18 +48,24 @@ cd $BUILD_DIR
 
 mkdir -p .jboss
 
-echo -n "-----> downloading Wildfly ${WILDFLY_VERSION}... "
-# wget https://github.com/wildfly/wildfly/releases/download/25.0.1.Final/wildfly-25.0.1.Final.tar.gz
-wget https://download.jboss.org/wildfly/16.0.0.Final/wildfly-16.0.0.Final.tar.gz
-echo "downloaded"
-# sha1sum wildfly-$WILDFLY_VERSION.tar.gz | grep $WILDFLY_SHA1 > /dev/null 2>&1
+# The tarball is kept in Heroku's build cache so it is only downloaded once per app
+WILDFLY_URL=${WILDFLY_URL:-"https://download.jboss.org/wildfly/${WILDFLY_VERSION}/wildfly-${WILDFLY_VERSION}.tar.gz"}
+WILDFLY_TGZ="$CACHE_DIR/wildfly-${WILDFLY_VERSION}.tar.gz"
+if [ -f "$WILDFLY_TGZ" ]; then
+  echo "-----> using cached Wildfly ${WILDFLY_VERSION} from build cache"
+else
+  echo -n "-----> downloading Wildfly ${WILDFLY_VERSION}... "
+  mkdir -p "$CACHE_DIR"
+  # download to a temp name so an interrupted build never leaves a truncated file in the cache
+  wget -q -O "$WILDFLY_TGZ.part" "$WILDFLY_URL"
+  mv "$WILDFLY_TGZ.part" "$WILDFLY_TGZ"
+  echo "downloaded"
+fi
+# sha1sum "$WILDFLY_TGZ" | grep $WILDFLY_SHA1 > /dev/null 2>&1
 # echo "verified"
-tar xf wildfly-$WILDFLY_VERSION.tar.gz
+echo -n "-----> extracting Wildfly ${WILDFLY_VERSION}... "
+tar xf "$WILDFLY_TGZ" -C .jboss
 echo "extracted"
-mv wildfly-$WILDFLY_VERSION $JBOSS_HOME
-echo "moved"
-rm wildfly-$WILDFLY_VERSION.tar.gz
-echo "done"
 
 echo -n "-----> Deploying war file(s)... "
 # cp target/*.war $JBOSS_HOME/standalone/deployments/
