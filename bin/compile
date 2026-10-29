@@ -12,22 +12,6 @@ BUILD_DIR=$1
 CACHE_DIR=$2
 ENV_DIR=$3
 
-
-echo "path ENV_DIR: ${ENV_DIR}"
-ls -la $ENV_DIR
-
-# Derive DB_URL / DB_USER / DB_PASSWORD from Heroku's DATABASE_URL
-# Format: postgres://DB_USER:DB_PASSWORD@HOST:PORT/DBNAME
-DATABASE_URL_ENV=$(cat $ENV_DIR/DATABASE_URL)
-DB_REST=${DATABASE_URL_ENV#*://}            # DB_USER:DB_PASSWORD@HOST:PORT/DBNAME
-DB_USERINFO=${DB_REST%@*}                   # DB_USER:DB_PASSWORD
-DB_URL_ENV="jdbc:postgresql://${DB_REST##*@}"   # jdbc:postgresql://HOST:PORT/DBNAME
-DB_USER_ENV=${DB_USERINFO%%:*}
-DB_PASSWORD_ENV=${DB_USERINFO#*:}
-echo "DB_URL_ENV: ${DB_URL_ENV}"
-echo "DB_USER_ENV: ${DB_USER_ENV}"
-echo "DB_PASSWORD_ENV: ${DB_PASSWORD_ENV}"
-
 echo "path BUILD_DIR: ${BUILD_DIR}"
 ls -la $BUILD_DIR
 
@@ -68,35 +52,17 @@ echo -n "-----> Deploying war file(s)... "
 cp 05_myWMS-ear/target/*.ear $JBOSS_HOME/standalone/deployments/
 echo "done"
 
-#DB_CONNECTION_URL
-#DB_USER_NAME
-#DB_USER_PASSWORD
-
 # Get the absolute path of the buildpack directory
 BP_DIR="$(cd "${0%/*}/.."; pwd)"
 echo "absolute path: ${BP_DIR}"
 cp $BP_DIR/postgresql-42.7.14.jar $JBOSS_HOME/standalone/deployments/postgresql.jar
 
-echo "s,DB_CONNECTION_URL,${DB_URL_ENV}," > script1.sed
-echo "script: $(cat script1.sed)"
-
-echo "s,DB_USER_NAME,${DB_USER_ENV}," > script2.sed
-echo "script: $(cat script2.sed)"
-
-echo "s,DB_USER_PASSWORD,${DB_PASSWORD_ENV}," > script3.sed
-echo "script: $(cat script3.sed)"
-cp $BP_DIR/standalone.xml input.xml
-sed -f script1.sed -f script2.sed -f script3.sed input.xml > output.xml
-
-echo "$(cat output.xml)"
-
-cp output.xml $JBOSS_HOME/standalone/configuration/standalone.xml
-
-rm script1.sed
-rm script2.sed
-rm script3.sed
-
-echo "$(cat $JBOSS_HOME/standalone/configuration/standalone.xml)"
+# standalone.xml reads the datasource credentials at boot via ${env.JDBC_DATABASE_*}
+# expressions. Those variables are exported on every dyno start by .profile.d/jdbc.sh,
+# which jvm-common installed above (it parses Heroku's DATABASE_URL).
+echo -n "-----> Installing standalone.xml... "
+cp $BP_DIR/standalone.xml $JBOSS_HOME/standalone/configuration/standalone.xml
+echo "done"
 
 echo "-----> Creating configuration..."
 if [ -f $BUILD_DIR/Procfile ]; then
@@ -107,6 +73,7 @@ web: \$JBOSS_HOME/bin/standalone.sh -b=0.0.0.0 -Djboss.http.port=\$PORT
 EOF
 fi
 
+mkdir -p $BUILD_DIR/.profile.d
 cat << EOF > $BUILD_DIR/.profile.d/jboss.sh
 export JBOSS_HOME=${JBOSS_HOME}
 # prevent WFLYLOG0078
